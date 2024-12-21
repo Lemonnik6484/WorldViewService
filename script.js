@@ -1,5 +1,5 @@
 // Config
-const skyboxes_location = "../skyboxes/";
+const skyboxes_location = "./skyboxes/";
 
 // Initialization
 let scene = new THREE.Scene();
@@ -13,19 +13,25 @@ function getQueryParam(param) {
     if (urlParams.size != 0) {
         return atob(urlParams.get(param));
     } else {
-        window.location.href = "../";
         return "test";
     }    
 }
 
-const game_location = getQueryParam("location");
+// Work mode
+const work_mode = getQueryParam("mode");
+if (work_mode === "game") {
+    let encoded_location = getQueryParam("location");
+    var WVlocation = atob(encoded_location);
+} else {
+    var WVlocation = getQueryParam("location");
+}
 
 // Skybox
 let loader = new THREE.CubeTextureLoader();
 let texture = loader.load([
-    `${skyboxes_location}${game_location}/panorama_1.png`,/* X+ */ `${skyboxes_location}${game_location}/panorama_3.png`, /* X- */
-    `${skyboxes_location}${game_location}/panorama_4.png`,/* Y+ */ `${skyboxes_location}${game_location}/panorama_5.png`, /* Y- */
-    `${skyboxes_location}${game_location}/panorama_0.png`,/* Z+ */ `${skyboxes_location}${game_location}/panorama_2.png`  /* Z- */
+    `${skyboxes_location}${WVlocation}/panorama_1.png`,/* X+ */ `${skyboxes_location}${WVlocation}/panorama_3.png`, /* X- */
+    `${skyboxes_location}${WVlocation}/panorama_4.png`,/* Y+ */ `${skyboxes_location}${WVlocation}/panorama_5.png`, /* Y- */
+    `${skyboxes_location}${WVlocation}/panorama_0.png`,/* Z+ */ `${skyboxes_location}${WVlocation}/panorama_2.png`  /* Z- */
 ]);
 scene.background = texture;
 
